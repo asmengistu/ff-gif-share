@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'auth/firebase_user_provider.dart';
 import 'package:gif_share/login_page/login_page_widget.dart';
-import 'package:gif_share/home_page/home_page_widget.dart';
+import 'flutter_flow/flutter_flow_theme.dart';
+import 'home_page/home_page_widget.dart';
+import 'profile_page/profile_page_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,7 @@ class GifShareHomePage extends StatelessWidget {
       initialData: gifShareFirebaseUser.value,
       builder: (context, snapshot) {
         return snapshot.data.when(
-          user: (_) => HomePageWidget(),
+          user: (_) => NavBarHolder(),
           loggedOut: () => LoginPageWidget(),
           initial: () => Container(
             color: Colors.white,
@@ -44,6 +46,65 @@ class GifShareHomePage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class NavBarHolder extends StatefulWidget {
+  NavBarHolder({Key key}) : super(key: key);
+
+  @override
+  _NavBarHolderState createState() => _NavBarHolderState();
+}
+
+/// This is the private State class that goes with NavBarHolder.
+class _NavBarHolderState extends State<NavBarHolder> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = [
+      HomePageWidget(),
+      ProfilePageWidget(),
+    ];
+    return Scaffold(
+      body: tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              size: 24,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline,
+              color: Color(0xFF9E9E9E),
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.person,
+              color: FlutterFlowTheme.primaryColor,
+              size: 24,
+            ),
+            label: 'Profile',
+          )
+        ],
+        backgroundColor: Colors.white,
+        currentIndex: _currentIndex,
+        selectedItemColor: FlutterFlowTheme.primaryColor,
+        unselectedItemColor: Color(0x8A000000),
+        onTap: (i) => setState(() => _currentIndex = i),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+      ),
     );
   }
 }
