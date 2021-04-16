@@ -122,8 +122,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               children: [
                                 InkWell(
                                   onDoubleTap: () async {
-                                    final postsRecordData =
-                                        createPostsRecordData();
+                                    final postsRecordData = {
+                                      ...createPostsRecordData(),
+                                      'liked_by': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                    };
 
                                     await listViewPostsRecord.reference
                                         .update(postsRecordData);
