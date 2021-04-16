@@ -60,65 +60,77 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 itemBuilder: (context, listViewIndex) {
                   final listViewPostsRecord =
                       listViewPostsRecordList[listViewIndex];
-                  return Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Color(0xFFF5F5F5),
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        alignment: Alignment(0, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Image.network(
-                              listViewPostsRecord.gifUrl,
-                              width: double.infinity,
-                              height: 300,
-                              fit: BoxFit.cover,
+                  return StreamBuilder<UsersRecord>(
+                    stream: UsersRecord.getDocument(listViewPostsRecord.user),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      final cardUsersRecord = snapshot.data;
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        child: Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Color(0xFFF5F5F5),
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                                    child: Text(
-                                      'Post by: ',
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Poppins',
-                                        fontStyle: FontStyle.italic,
+                            alignment: Alignment(0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Image.network(
+                                  listViewPostsRecord.gifUrl,
+                                  width: double.infinity,
+                                  height: 300,
+                                  fit: BoxFit.cover,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                        child: Text(
+                                          'Post by: ',
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 0, 1),
+                                        child: Text(
+                                          cardUsersRecord.email,
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 1),
-                                    child: Text(
-                                      'janedoe@gmail.com',
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
               ),
