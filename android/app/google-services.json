@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "612970431695",
+    "project_id": "ff-gif",
+    "storage_bucket": "ff-gif.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612970431695:android:baee007aca37d65e0e63ba",
+        "android_client_info": {
+          "package_name": "com.flutterflow.gifshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612970431695-drb0jb7lgpbn7orj10vsnp8n3qcglirl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJxnKjt99TrKqc2yroauHBDCfKzK8pC7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612970431695-drb0jb7lgpbn7orj10vsnp8n3qcglirl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612970431695-8u7o72peli5tvn10caknhjj39h3u7s40.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterflow.gifshare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
