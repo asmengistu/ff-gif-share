@@ -85,12 +85,10 @@ class _NavBarHolderState extends State<NavBarHolder> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outline,
-              color: Color(0xFF9E9E9E),
               size: 24,
             ),
             activeIcon: Icon(
               Icons.person,
-              color: FlutterFlowTheme.primaryColor,
               size: 24,
             ),
             label: 'Profile',

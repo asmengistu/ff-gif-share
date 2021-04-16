@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,69 +34,96 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         elevation: 1,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            children: [
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: Color(0xFFF5F5F5),
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  alignment: Alignment(0, 0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/seed/343/600',
-                        width: double.infinity,
-                        height: 300,
-                        fit: BoxFit.cover,
+        child: StreamBuilder<List<PostsRecord>>(
+          stream: queryPostsRecord(
+            queryBuilder: (postsRecord) =>
+                postsRecord.orderBy('created_at', descending: true),
+          ),
+          builder: (context, snapshot) {
+            // Customize what your widget looks like when it's loading.
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            List<PostsRecord> listViewPostsRecordList = snapshot.data;
+            // Customize what your widget looks like with no query results.
+            if (snapshot.data.isEmpty) {
+              // return Container();
+              // For now, we'll just include some dummy data.
+              listViewPostsRecordList = createDummyPostsRecord(count: 4);
+            }
+            return Padding(
+              padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                itemCount: listViewPostsRecordList.length,
+                itemBuilder: (context, listViewIndex) {
+                  final listViewPostsRecord =
+                      listViewPostsRecordList[listViewIndex];
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Color(0xFFF5F5F5),
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
-                        child: Row(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        alignment: Alignment(0, 0),
+                        child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                              child: Text(
-                                'Post by: ',
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
+                            Image.network(
+                              listViewPostsRecord.gifUrl,
+                              width: double.infinity,
+                              height: 300,
+                              fit: BoxFit.cover,
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 0, 1),
-                              child: Text(
-                                'janedoe@gmail.com',
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: Text(
+                                      'Post by: ',
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 1),
+                                    child: Text(
+                                      'janedoe@gmail.com',
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );
