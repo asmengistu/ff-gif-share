@@ -1,6 +1,9 @@
 import '../add_post/add_post_widget.dart';
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,7 +33,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        actions: [],
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await signOut();
+            },
+            icon: Icon(
+              Icons.logout,
+              color: Colors.black,
+              size: 30,
+            ),
+            iconSize: 30,
+          )
+        ],
         centerTitle: true,
         elevation: 1,
       ),
@@ -105,11 +120,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Image.network(
-                                  listViewPostsRecord.gifUrl,
-                                  width: double.infinity,
-                                  height: 300,
-                                  fit: BoxFit.cover,
+                                InkWell(
+                                  onDoubleTap: () async {
+                                    final postsRecordData =
+                                        createPostsRecordData();
+
+                                    await listViewPostsRecord.reference
+                                        .update(postsRecordData);
+                                  },
+                                  child: Image.network(
+                                    listViewPostsRecord.gifUrl,
+                                    width: double.infinity,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 15),

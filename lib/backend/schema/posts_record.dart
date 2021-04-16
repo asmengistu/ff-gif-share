@@ -23,11 +23,16 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
   Timestamp get createdAt;
 
   @nullable
+  @BuiltValueField(wireName: 'liked_by')
+  BuiltList<DocumentReference> get likedBy;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
-  static void _initializeBuilder(PostsRecordBuilder builder) =>
-      builder..gifUrl = '';
+  static void _initializeBuilder(PostsRecordBuilder builder) => builder
+    ..gifUrl = ''
+    ..likedBy = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('posts');
