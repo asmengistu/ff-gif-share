@@ -1,3 +1,4 @@
+import '../add_post/add_post_widget.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         actions: [],
         centerTitle: true,
         elevation: 1,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddPostWidget(),
+            ),
+          );
+        },
+        backgroundColor: FlutterFlowTheme.primaryColor,
+        elevation: 8,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 24,
+        ),
       ),
       body: SafeArea(
         child: StreamBuilder<List<PostsRecord>>(
