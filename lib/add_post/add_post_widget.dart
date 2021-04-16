@@ -29,7 +29,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: Text(
           'Add GIF',
           style: FlutterFlowTheme.bodyText1.override(
