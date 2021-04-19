@@ -56,7 +56,8 @@ Map<String, dynamic> createPostsRecordData({
         PostsRecord((p) => p
           ..gifUrl = gifUrl
           ..user = user
-          ..createdAt = createdAt));
+          ..createdAt = createdAt
+          ..likedBy = null));
 
 PostsRecord get dummyPostsRecord {
   final builder = PostsRecordBuilder()
