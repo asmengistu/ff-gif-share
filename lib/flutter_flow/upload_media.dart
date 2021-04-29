@@ -14,10 +14,14 @@ class SelectedMedia {
   final Uint8List bytes;
 }
 
-Future<SelectedMedia> selectMedia(
-    {double maxWidth, double maxHeight, bool isVideo = false}) async {
+Future<SelectedMedia> selectMedia({
+  double maxWidth,
+  double maxHeight,
+  bool isVideo = false,
+  bool fromCamera = false,
+}) async {
   final picker = ImagePicker();
-  final source = ImageSource.gallery;
+  final source = fromCamera ? ImageSource.camera : ImageSource.gallery;
   final pickedMediaFuture = isVideo
       ? picker.getVideo(source: source)
       : picker.getImage(

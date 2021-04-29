@@ -5,6 +5,7 @@ import '../backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_user_provider.dart';
 
+export 'anonymous_auth.dart';
 export 'apple_auth.dart';
 export 'email_auth.dart';
 export 'google_auth.dart';
@@ -39,21 +40,18 @@ Future resetPassword({String email, BuildContext context}) async {
     return null;
   }
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Password reset email sent!')),
+    const SnackBar(content: Text('Password reset email sent!')),
   );
 }
 
-String get currentUserEmail =>
-    currentUser.maybeWhen(user: (user) => user.email, orElse: () => '');
+String get currentUserEmail => currentUser?.user?.email ?? '';
 
-String get currentUserUid =>
-    currentUser.maybeWhen(user: (user) => user.uid, orElse: () => '');
+String get currentUserUid => currentUser?.user?.uid ?? '';
 
-String get currentUserDisplayName =>
-    currentUser.maybeWhen(user: (user) => user.displayName, orElse: () => '');
+String get currentUserDisplayName => currentUser?.user?.displayName ?? '';
 
-String get currentUserPhoto =>
-    currentUser.maybeWhen(user: (user) => user.photoURL, orElse: () => '');
+String get currentUserPhoto => currentUser?.user?.photoURL ?? '';
 
-DocumentReference get currentUserReference => currentUser.maybeWhen(
-    user: (user) => UsersRecord.collection.doc(user.uid), orElse: () => null);
+DocumentReference get currentUserReference => currentUser?.user != null
+    ? UsersRecord.collection.doc(currentUser.user.uid)
+    : null;

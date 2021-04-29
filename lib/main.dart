@@ -12,63 +12,68 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Stream<GifShareFirebaseUser> userStream;
+  GifShareFirebaseUser initialUser;
+
+  @override
+  void initState() {
+    super.initState();
+    userStream = gifShareFirebaseUserStream()
+      ..listen((user) => initialUser ?? setState(() => initialUser = user));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Flutter App',
+      title: 'GifShare',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: GifShareHomePage(),
-    );
-  }
-}
-
-class GifShareHomePage extends StatelessWidget {
-  const GifShareHomePage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<GifShareFirebaseUser>(
-      stream: gifShareFirebaseUser,
-      initialData: gifShareFirebaseUser.value,
-      builder: (context, snapshot) {
-        return snapshot.data.when(
-          user: (_) => NavBarHolder(),
-          loggedOut: () => LoginPageWidget(),
-          initial: () => Container(
-            color: Colors.white,
-            child: const Center(
+      home: initialUser == null
+          ? const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
               ),
-            ),
-          ),
-        );
-      },
+            )
+          : currentUser.loggedIn
+              ? NavBarPage()
+              : LoginPageWidget(),
     );
   }
 }
 
-class NavBarHolder extends StatefulWidget {
-  NavBarHolder({Key key}) : super(key: key);
+class NavBarPage extends StatefulWidget {
+  NavBarPage({Key key, this.initialPage}) : super(key: key);
+
+  final String initialPage;
 
   @override
-  _NavBarHolderState createState() => _NavBarHolderState();
+  _NavBarPageState createState() => _NavBarPageState();
 }
 
-/// This is the private State class that goes with NavBarHolder.
-class _NavBarHolderState extends State<NavBarHolder> {
-  int _currentIndex = 0;
+/// This is the private State class that goes with NavBarPage.
+class _NavBarPageState extends State<NavBarPage> {
+  String _currentPage = 'HomePage';
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.initialPage ?? _currentPage;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      HomePageWidget(),
-      ProfilePageWidget(),
-    ];
+    final tabs = {
+      'HomePage': HomePageWidget(),
+      'ProfilePage': ProfilePageWidget(),
+    };
     return Scaffold(
-      body: tabs[_currentIndex],
+      body: tabs[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -95,10 +100,10 @@ class _NavBarHolderState extends State<NavBarHolder> {
           )
         ],
         backgroundColor: Colors.white,
-        currentIndex: _currentIndex,
+        currentIndex: tabs.keys.toList().indexOf(_currentPage),
         selectedItemColor: FlutterFlowTheme.primaryColor,
         unselectedItemColor: Color(0x8A000000),
-        onTap: (i) => setState(() => _currentIndex = i),
+        onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,

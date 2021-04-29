@@ -1,6 +1,8 @@
 import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
+import '../onboarding_page/onboarding_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +35,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         decoration: BoxDecoration(
           color: Color(0xFF110631),
         ),
-        alignment: Alignment(0, 0),
         child: Stack(
           children: [
             Align(
@@ -180,9 +181,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   return;
                                 }
 
-                                if (mounted && Navigator.of(context).canPop()) {
-                                  Navigator.of(context).pop();
-                                }
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        OnboardingPageWidget(),
+                                  ),
+                                );
                               },
                               text: 'Sign up',
                               options: FFButtonOptions(
@@ -215,10 +220,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     return;
                                   }
 
-                                  if (mounted &&
-                                      Navigator.of(context).canPop()) {
-                                    Navigator.of(context).pop();
-                                  }
+                                  await Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NavBarPage(initialPage: 'HomePage'),
+                                    ),
+                                    (r) => false,
+                                  );
                                 },
                                 text: 'Sign in',
                                 options: FFButtonOptions(

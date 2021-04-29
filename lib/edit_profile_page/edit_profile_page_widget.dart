@@ -52,13 +52,13 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
           IconButton(
             onPressed: () async {
               final displayName = textController2.text;
-              final photoUrl = uploadedFileUrl;
               final username = textController1.text;
+              final photoUrl = '';
 
               final usersRecordData = createUsersRecordData(
                 displayName: displayName,
-                photoUrl: photoUrl,
                 username: username,
+                photoUrl: photoUrl,
               );
 
               await widget.userRecord.reference.update(usersRecordData);
@@ -92,7 +92,9 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                         alignment: Alignment(0, 0),
                         child: InkWell(
                           onTap: () async {
-                            final selectedMedia = await selectMedia();
+                            final selectedMedia = await selectMedia(
+                              isVideo: true,
+                            );
                             if (selectedMedia != null &&
                                 validateFileFormat(
                                     selectedMedia.storagePath, context)) {

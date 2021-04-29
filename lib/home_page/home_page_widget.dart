@@ -3,6 +3,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../login_page/login_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,18 +26,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(
-          'GifShare Feed',
+          'Feed',
           style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Playfair Display',
-            color: Color(0xFF1A1A1A),
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
           ),
         ),
         actions: [
           IconButton(
             onPressed: () async {
               await signOut();
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPageWidget(),
+                ),
+                (r) => false,
+              );
             },
             icon: Icon(
               Icons.logout,
@@ -64,6 +69,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           Icons.add,
           color: Colors.white,
           size: 24,
+        ),
+      ),
+      drawer: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Drawer(
+          elevation: 16,
         ),
       ),
       body: SafeArea(
@@ -116,7 +127,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            alignment: Alignment(0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
