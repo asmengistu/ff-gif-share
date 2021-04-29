@@ -179,6 +179,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       )
                                     ],
                                   ),
+                                ),
+                                Builder(
+                                  builder: (context) {
+                                    final likedUser =
+                                        listViewPostsRecord.likedBy?.toList() ??
+                                            [];
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: List.generate(likedUser.length,
+                                          (likedUserIndex) {
+                                        final likedUserItem =
+                                            likedUser[likedUserIndex];
+                                        return StreamBuilder<UsersRecord>(
+                                          stream: UsersRecord.getDocument(
+                                              likedUserItem),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            }
+                                            final containerUsersRecord =
+                                                snapshot.data;
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.transparent,
+                                              ),
+                                              child: Text(
+                                                containerUsersRecord
+                                                    .displayName,
+                                                style: FlutterFlowTheme
+                                                    .bodyText1
+                                                    .override(
+                                                  fontFamily: 'Poppins',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }),
+                                    );
+                                  },
                                 )
                               ],
                             ),
