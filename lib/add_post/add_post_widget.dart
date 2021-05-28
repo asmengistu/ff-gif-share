@@ -1,9 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/upload_media.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +14,14 @@ class AddPostWidget extends StatefulWidget {
 }
 
 class _AddPostWidgetState extends State<AddPostWidget> {
-  String uploadedFileUrl;
+  TextEditingController textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
         actions: [
           IconButton(
             onPressed: () async {
-              final gifUrl = uploadedFileUrl;
+              final gifUrl = textController.text;
               final user = currentUserReference;
               final createdAt = getCurrentTimestamp;
 
@@ -70,37 +74,75 @@ class _AddPostWidgetState extends State<AddPostWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEEEEEE),
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        final selectedMedia = await selectMedia();
-                        if (selectedMedia != null &&
-                            validateFileFormat(
-                                selectedMedia.storagePath, context)) {
-                          showUploadMessage(context, 'Uploading file...',
-                              showLoading: true);
-                          final downloadUrl = await uploadData(
-                              selectedMedia.storagePath, selectedMedia.bytes);
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          if (downloadUrl != null) {
-                            setState(() => uploadedFileUrl = downloadUrl);
-                            showUploadMessage(context, 'Success!');
-                          } else {
-                            showUploadMessage(
-                                context, 'Failed to upload media');
-                          }
-                        }
-                      },
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.black,
-                        size: 24,
+                  TextFormField(
+                    controller: textController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      hintText: 'gif url',
+                      hintStyle: FlutterFlowTheme.bodyText1.override(
+                        fontFamily: 'Poppins',
                       ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0),
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0),
+                        ),
+                      ),
+                    ),
+                    style: FlutterFlowTheme.bodyText1.override(
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  Expanded(
+                    child: StreamBuilder<List<UsersRecord>>(
+                      stream: queryUsersRecord(
+                        queryBuilder: (usersRecord) => usersRecord
+                            .where('email', isEqualTo: textController.text),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        List<UsersRecord> listViewUsersRecordList =
+                            snapshot.data;
+                        // Customize what your widget looks like with no query results.
+                        if (snapshot.data.isEmpty) {
+                          // return Container();
+                          // For now, we'll just include some dummy data.
+                          listViewUsersRecordList =
+                              createDummyUsersRecord(count: 4);
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewUsersRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewUsersRecord =
+                                listViewUsersRecordList[listViewIndex];
+                            return Text(
+                              listViewUsersRecord.displayName,
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Poppins',
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                   )
                 ],

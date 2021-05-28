@@ -33,6 +33,14 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   String get username;
 
   @nullable
+  @BuiltValueField(wireName: 'followers_list')
+  BuiltList<DocumentReference> get followersList;
+
+  @nullable
+  @BuiltValueField(wireName: 'follow_requests_list')
+  BuiltList<DocumentReference> get followRequestsList;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -41,7 +49,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..username = '';
+    ..username = ''
+    ..followersList = ListBuilder()
+    ..followRequestsList = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -71,7 +81,9 @@ Map<String, dynamic> createUsersRecordData({
           ..photoUrl = photoUrl
           ..uid = uid
           ..createdTime = createdTime
-          ..username = username));
+          ..username = username
+          ..followersList = null
+          ..followRequestsList = null));
 
 UsersRecord get dummyUsersRecord {
   final builder = UsersRecordBuilder()

@@ -29,189 +29,170 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      endDrawer: Drawer(
+        elevation: 16,
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
           color: Color(0xFF110631),
         ),
-        child: Stack(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(flex: 2),
             Align(
-              alignment: Alignment(0, 0.45),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: Container(
-                          width: 285,
-                          height: 40,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment(0, 0),
-                                child: TextFormField(
-                                  controller: emailTextController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'email',
-                                    hintStyle: GoogleFonts.getFont(
+              alignment: Alignment(0.04, -0.58),
+              child: Text(
+                'GifShare',
+                style: FlutterFlowTheme.bodyText1.override(
+                  fontFamily: 'Playfair Display',
+                  color: Colors.white,
+                  fontSize: 40,
+                ),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment(0, 0.45),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          child: Container(
+                            width: 285,
+                            height: 40,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment(0, 0),
+                                  child: TextFormField(
+                                    controller: emailTextController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: 'email',
+                                      hintStyle: GoogleFonts.getFont(
+                                        'Lato',
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF3C2452),
+                                          width: 2,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF3C2452),
+                                          width: 2,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                    ),
+                                    style: GoogleFonts.getFont(
                                       'Lato',
                                       color: Colors.white,
                                       fontSize: 18,
                                     ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF3C2452),
-                                        width: 2,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF3C2452),
-                                        width: 2,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
                                   ),
-                                  style: GoogleFonts.getFont(
-                                    'Lato',
+                                ),
+                                Align(
+                                  alignment: Alignment(0.95, 0.5),
+                                  child: Icon(
+                                    Icons.person,
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    size: 24,
                                   ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment(0.95, 0.5),
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: Container(
-                          width: 285,
-                          height: 40,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment(0, 0),
-                                child: TextFormField(
-                                  controller: passwordTextController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    hintText: 'password',
-                                    hintStyle: GoogleFonts.getFont(
-                                      'Lato',
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF3C2452),
-                                        width: 2,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF3C2452),
-                                        width: 2,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                  ),
-                                  style: GoogleFonts.getFont(
-                                    'Lato',
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment(0.95, 0.5),
-                                child: Icon(
-                                  Icons.lock_open,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                final user = await createAccountWithEmail(
-                                  context,
-                                  emailTextController.text,
-                                  passwordTextController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        OnboardingPageWidget(),
-                                  ),
-                                );
-                              },
-                              text: 'Sign up',
-                              options: FFButtonOptions(
-                                width: 125,
-                                height: 40,
-                                color: Color(0x00FFFFFF),
-                                textStyle: GoogleFonts.getFont(
-                                  'Lato',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                                borderSide: BorderSide(
-                                  color: Color(0xFF553BBA),
-                                  width: 2,
-                                ),
-                                borderRadius: 0,
-                              ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
-                              child: FFButtonWidget(
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          child: Container(
+                            width: 285,
+                            height: 40,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment(0, 0),
+                                  child: TextFormField(
+                                    controller: passwordTextController,
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      hintText: 'password',
+                                      hintStyle: GoogleFonts.getFont(
+                                        'Lato',
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF3C2452),
+                                          width: 2,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF3C2452),
+                                          width: 2,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                    ),
+                                    style: GoogleFonts.getFont(
+                                      'Lato',
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment(0.95, 0.5),
+                                  child: Icon(
+                                    Icons.lock_open,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FFButtonWidget(
                                 onPressed: () async {
-                                  final user = await signInWithEmail(
+                                  final user = await createAccountWithEmail(
                                     context,
                                     emailTextController.text,
                                     passwordTextController.text,
@@ -220,16 +201,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     return;
                                   }
 
-                                  await Navigator.pushAndRemoveUntil(
+                                  await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          NavBarPage(initialPage: 'HomePage'),
+                                          OnboardingPageWidget(),
                                     ),
-                                    (r) => false,
                                   );
                                 },
-                                text: 'Sign in',
+                                text: 'Sign up',
                                 options: FFButtonOptions(
                                   width: 125,
                                   height: 40,
@@ -247,34 +227,65 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   borderRadius: 0,
                                 ),
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    final user = await signInWithEmail(
+                                      context,
+                                      emailTextController.text,
+                                      passwordTextController.text,
+                                    );
+                                    if (user == null) {
+                                      return;
+                                    }
+
+                                    await Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            NavBarPage(initialPage: 'HomePage'),
+                                      ),
+                                      (r) => false,
+                                    );
+                                  },
+                                  text: 'Sign in',
+                                  options: FFButtonOptions(
+                                    width: 125,
+                                    height: 40,
+                                    color: Color(0x00FFFFFF),
+                                    textStyle: GoogleFonts.getFont(
+                                      'Lato',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Color(0xFF553BBA),
+                                      width: 2,
+                                    ),
+                                    borderRadius: 0,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Forgot Password?',
-                        style: GoogleFonts.getFont(
-                          'Lato',
-                          color: Color(0xFF8E8E8E),
-                          fontSize: 16,
-                        ),
-                      )
-                    ],
+                        Text(
+                          'Forgot Password?',
+                          style: GoogleFonts.getFont(
+                            'Lato',
+                            color: Color(0xFF8E8E8E),
+                            fontSize: 16,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment(0.04, -0.58),
-              child: Text(
-                'GifShare',
-                style: FlutterFlowTheme.bodyText1.override(
-                  fontFamily: 'Playfair Display',
-                  color: Colors.white,
-                  fontSize: 40,
-                ),
-              ),
-            )
+            Spacer(flex: 2)
           ],
         ),
       ),

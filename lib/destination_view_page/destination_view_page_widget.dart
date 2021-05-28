@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DestinationViewPageWidget extends StatefulWidget {
-  DestinationViewPageWidget({Key key, this.destination}) : super(key: key);
+  DestinationViewPageWidget({
+    Key key,
+    this.destination,
+  }) : super(key: key);
 
   final String destination;
 
@@ -15,6 +18,7 @@ class DestinationViewPageWidget extends StatefulWidget {
 }
 
 class _DestinationViewPageWidgetState extends State<DestinationViewPageWidget> {
+  bool checkboxListTileValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,7 +43,7 @@ class _DestinationViewPageWidgetState extends State<DestinationViewPageWidget> {
                         ?.toList() ??
                     [];
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  padding: EdgeInsets.fromLTRB(15, 3, 15, 0),
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
@@ -64,6 +68,28 @@ class _DestinationViewPageWidgetState extends State<DestinationViewPageWidget> {
                                 width: double.infinity,
                                 height: 300,
                                 fit: BoxFit.cover,
+                              ),
+                              CheckboxListTile(
+                                value: checkboxListTileValue ??
+                                    getJsonField(searchResultsItem, r'$.asdf'),
+                                onChanged: (newValue) => setState(
+                                    () => checkboxListTileValue = newValue),
+                                title: Text(
+                                  'Title',
+                                  style: FlutterFlowTheme.title3.override(
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'Subtitle',
+                                  style: FlutterFlowTheme.subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                                tileColor: Color(0xFFF5F5F5),
+                                dense: false,
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
                               )
                             ],
                           ),

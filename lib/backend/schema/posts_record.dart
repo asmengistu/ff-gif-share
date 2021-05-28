@@ -27,12 +27,17 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
   BuiltList<DocumentReference> get likedBy;
 
   @nullable
+  @BuiltValueField(wireName: 'test_bool')
+  bool get testBool;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(PostsRecordBuilder builder) => builder
     ..gifUrl = ''
-    ..likedBy = ListBuilder();
+    ..likedBy = ListBuilder()
+    ..testBool = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('posts');
@@ -50,6 +55,7 @@ Map<String, dynamic> createPostsRecordData({
   String gifUrl,
   DocumentReference user,
   Timestamp createdAt,
+  bool testBool,
 }) =>
     serializers.serializeWith(
         PostsRecord.serializer,
@@ -57,12 +63,14 @@ Map<String, dynamic> createPostsRecordData({
           ..gifUrl = gifUrl
           ..user = user
           ..createdAt = createdAt
-          ..likedBy = null));
+          ..likedBy = null
+          ..testBool = testBool));
 
 PostsRecord get dummyPostsRecord {
   final builder = PostsRecordBuilder()
     ..gifUrl = dummyImagePath
-    ..createdAt = dummyTimestamp;
+    ..createdAt = dummyTimestamp
+    ..testBool = dummyBoolean;
   return builder.build();
 }
 

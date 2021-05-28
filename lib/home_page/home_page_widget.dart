@@ -1,7 +1,9 @@
 import '../add_post/add_post_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../destination_page/destination_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,8 +27,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+        leading: InkWell(
+          onTap: () async {
+            scaffoldKey.currentState.openDrawer();
+          },
+          child: Icon(
+            Icons.menu,
+            color: Colors.black,
+            size: 24,
+          ),
+        ),
         title: Text(
-          'Feed',
+          getCurrentTimestamp,
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
           ),
@@ -72,9 +84,166 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ),
       ),
       drawer: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width * 0.8,
         child: Drawer(
           elevation: 16,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xFFEEEEEE),
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 60, 10, 0),
+              child: ListView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.network(
+                      'https://picsum.photos/seed/465/600',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DestinationPageWidget(),
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                        title: Text(
+                          'Account Settings',
+                          style: FlutterFlowTheme.title3.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF303030),
+                          size: 20,
+                        ),
+                        tileColor: Color(0xFFF5F5F5),
+                        dense: false,
+                        contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
       ),
       body: SafeArea(
@@ -130,23 +299,54 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                InkWell(
-                                  onDoubleTap: () async {
-                                    final postsRecordData = {
-                                      ...createPostsRecordData(),
-                                      'liked_by': FieldValue.arrayUnion(
-                                          [currentUserReference]),
-                                    };
+                                Stack(
+                                  children: [
+                                    InkWell(
+                                      onDoubleTap: () async {
+                                        final postsRecordData = {
+                                          'liked_by': FieldValue.arrayUnion(
+                                              [currentUserReference]),
+                                        };
 
-                                    await listViewPostsRecord.reference
-                                        .update(postsRecordData);
-                                  },
-                                  child: Image.network(
-                                    listViewPostsRecord.gifUrl,
-                                    width: double.infinity,
-                                    height: 300,
-                                    fit: BoxFit.cover,
-                                  ),
+                                        await listViewPostsRecord.reference
+                                            .update(postsRecordData);
+                                      },
+                                      child: Image.network(
+                                        listViewPostsRecord.gifUrl,
+                                        width: double.infinity,
+                                        height: 300,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment(0.95, 0),
+                                      child: ToggleIcon(
+                                        onPressed: () async {
+                                          final testBool =
+                                              !listViewPostsRecord.testBool;
+
+                                          final postsRecordData =
+                                              createPostsRecordData(
+                                            testBool: testBool,
+                                          );
+
+                                          await listViewPostsRecord.reference
+                                              .update(postsRecordData);
+                                        },
+                                        value: listViewPostsRecord.testBool,
+                                        onIcon: Icon(
+                                          Icons.favorite,
+                                          color: Colors.white,
+                                          size: 26,
+                                        ),
+                                        offIcon: Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 25,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
@@ -176,52 +376,41 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                        child: Text(
+                                          THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        ),
                                       )
                                     ],
                                   ),
                                 ),
-                                Builder(
-                                  builder: (context) {
-                                    final likedUser =
-                                        listViewPostsRecord.likedBy?.toList() ??
-                                            [];
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: List.generate(likedUser.length,
-                                          (likedUserIndex) {
-                                        final likedUserItem =
-                                            likedUser[likedUserIndex];
-                                        return StreamBuilder<UsersRecord>(
-                                          stream: UsersRecord.getDocument(
-                                              likedUserItem),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                  child:
-                                                      CircularProgressIndicator());
-                                            }
-                                            final containerUsersRecord =
-                                                snapshot.data;
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.transparent,
-                                              ),
-                                              child: Text(
-                                                containerUsersRecord
-                                                    .displayName,
-                                                style: FlutterFlowTheme
-                                                    .bodyText1
-                                                    .override(
-                                                  fontFamily: 'Poppins',
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }),
-                                    );
-                                  },
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                    Text(
+                                      THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    )
+                                  ],
                                 )
                               ],
                             ),

@@ -10,7 +10,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditProfilePageWidget extends StatefulWidget {
-  EditProfilePageWidget({Key key, this.userRecord}) : super(key: key);
+  EditProfilePageWidget({
+    Key key,
+    this.userRecord,
+  }) : super(key: key);
 
   final UsersRecord userRecord;
 
