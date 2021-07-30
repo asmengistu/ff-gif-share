@@ -36,8 +36,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: initialUser == null
           ? const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  color: FlutterFlowTheme.primaryColor,
+                ),
               ),
             )
           : currentUser.loggedIn
@@ -104,8 +108,11 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedItemColor: FlutterFlowTheme.primaryColor,
         unselectedItemColor: Color(0x8A000000),
         onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        // Temporary fix for https://github.com/flutter/flutter/issues/84556
+        selectedLabelStyle: const TextStyle(fontSize: 0.001),
+        unselectedLabelStyle: const TextStyle(fontSize: 0.001),
         type: BottomNavigationBarType.fixed,
       ),
     );

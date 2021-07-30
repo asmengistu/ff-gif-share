@@ -42,17 +42,12 @@ class _AddPostWidgetState extends State<AddPostWidget> {
         actions: [
           IconButton(
             onPressed: () async {
-              final gifUrl = textController.text;
-              final user = currentUserReference;
-              final createdAt = getCurrentTimestamp;
-
-              final postsRecordData = createPostsRecordData(
-                gifUrl: gifUrl,
-                user: user,
-                createdAt: createdAt,
+              final postsCreateData = createPostsRecordData(
+                gifUrl: textController.text,
+                user: currentUserReference,
+                createdAt: getCurrentTimestamp,
               );
-
-              await PostsRecord.collection.doc().set(postsRecordData);
+              await PostsRecord.collection.doc().set(postsCreateData);
               Navigator.pop(context);
             },
             icon: Icon(
@@ -84,7 +79,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(
@@ -94,7 +89,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(
@@ -116,16 +111,26 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: FlutterFlowTheme.primaryColor,
+                              ),
+                            ),
+                          );
                         }
                         List<UsersRecord> listViewUsersRecordList =
                             snapshot.data;
                         // Customize what your widget looks like with no query results.
                         if (snapshot.data.isEmpty) {
-                          // return Container();
-                          // For now, we'll just include some dummy data.
-                          listViewUsersRecordList =
-                              createDummyUsersRecord(count: 4);
+                          return Container(
+                            height: 100,
+                            child: Center(
+                              child: Text('No results.'),
+                            ),
+                          );
                         }
                         return ListView.builder(
                           padding: EdgeInsets.zero,

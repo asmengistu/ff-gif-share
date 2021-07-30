@@ -1,8 +1,16 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TestComponentWidget extends StatefulWidget {
-  TestComponentWidget({Key key}) : super(key: key);
+  TestComponentWidget({
+    Key key,
+    this.inputPost,
+  }) : super(key: key);
+
+  final PostsRecord inputPost;
 
   @override
   _TestComponentWidgetState createState() => _TestComponentWidgetState();

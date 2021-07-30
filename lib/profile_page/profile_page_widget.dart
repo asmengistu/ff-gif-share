@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../edit_profile_page/edit_profile_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,7 +24,15 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(
+                color: FlutterFlowTheme.primaryColor,
+              ),
+            ),
+          );
         }
         final profilePageUsersRecord = snapshot.data;
         return Scaffold(
@@ -33,53 +42,67 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(12, 0, 0, 1),
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment(-0.4, -0.02),
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.network(
-                                      profilePageUsersRecord.photoUrl,
+                Container(
+                  width: double.infinity,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: Image.network(
+                        'https://images.unsplash.com/photo-1623598129231-0d7846ad9eee?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                      ).image,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(12, 0, 0, 1),
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment(-0.4, -0.02),
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(1, 0, 0, 0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        profilePageUsersRecord.photoUrl,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                        child: Text(
-                          profilePageUsersRecord.displayName,
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Lato',
-                            color: Colors.black,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          child: Text(
+                            profilePageUsersRecord.displayName,
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Lato',
+                              color: Colors.white,
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -142,32 +165,42 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               children: [
                                 Align(
                                   alignment: Alignment(0, -1),
-                                  child: StreamBuilder<List<PostsRecord>>(
-                                    stream: queryPostsRecord(
-                                      queryBuilder: (postsRecord) =>
-                                          postsRecord.where('user',
-                                              isEqualTo: currentUserReference),
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      }
-                                      List<PostsRecord>
-                                          gridViewPostsRecordList =
-                                          snapshot.data;
-                                      // Customize what your widget looks like with no query results.
-                                      if (snapshot.data.isEmpty) {
-                                        // return Container();
-                                        // For now, we'll just include some dummy data.
-                                        gridViewPostsRecordList =
-                                            createDummyPostsRecord(count: 4);
-                                      }
-                                      return Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 3, 0, 0),
-                                        child: GridView.builder(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                                    child: StreamBuilder<List<PostsRecord>>(
+                                      stream: queryPostsRecord(
+                                        queryBuilder: (postsRecord) =>
+                                            postsRecord.where('user',
+                                                isEqualTo:
+                                                    currentUserReference),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
+                                                color: FlutterFlowTheme
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<PostsRecord>
+                                            gridViewPostsRecordList =
+                                            snapshot.data;
+                                        // Customize what your widget looks like with no query results.
+                                        if (snapshot.data.isEmpty) {
+                                          return Container(
+                                            height: 100,
+                                            child: Center(
+                                              child: Text('No results.'),
+                                            ),
+                                          );
+                                        }
+                                        return GridView.builder(
                                           padding: EdgeInsets.zero,
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -192,40 +225,49 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                               fit: BoxFit.cover,
                                             );
                                           },
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment(0, -1),
-                                  child: StreamBuilder<List<PostsRecord>>(
-                                    stream: queryPostsRecord(
-                                      queryBuilder: (postsRecord) =>
-                                          postsRecord.where('liked_by',
-                                              arrayContains:
-                                                  currentUserReference),
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      }
-                                      List<PostsRecord>
-                                          gridViewPostsRecordList =
-                                          snapshot.data;
-                                      // Customize what your widget looks like with no query results.
-                                      if (snapshot.data.isEmpty) {
-                                        // return Container();
-                                        // For now, we'll just include some dummy data.
-                                        gridViewPostsRecordList =
-                                            createDummyPostsRecord(count: 4);
-                                      }
-                                      return Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 3, 0, 0),
-                                        child: GridView.builder(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                                    child: StreamBuilder<List<PostsRecord>>(
+                                      stream: queryPostsRecord(
+                                        queryBuilder: (postsRecord) =>
+                                            postsRecord.where('liked_by',
+                                                arrayContains:
+                                                    currentUserReference),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
+                                                color: FlutterFlowTheme
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<PostsRecord>
+                                            gridViewPostsRecordList =
+                                            snapshot.data;
+                                        // Customize what your widget looks like with no query results.
+                                        if (snapshot.data.isEmpty) {
+                                          return Container(
+                                            height: 100,
+                                            child: Center(
+                                              child: Text('No results.'),
+                                            ),
+                                          );
+                                        }
+                                        return GridView.builder(
                                           padding: EdgeInsets.zero,
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -250,9 +292,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                               fit: BoxFit.cover,
                                             );
                                           },
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 )
                               ],

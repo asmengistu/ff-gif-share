@@ -22,7 +22,7 @@ class EditProfilePageWidget extends StatefulWidget {
 }
 
 class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
-  String uploadedFileUrl;
+  String uploadedFileUrl = '';
   TextEditingController textController1;
   TextEditingController textController2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -54,17 +54,12 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
         actions: [
           IconButton(
             onPressed: () async {
-              final displayName = textController2.text;
-              final username = textController1.text;
-              final photoUrl = '';
-
-              final usersRecordData = createUsersRecordData(
-                displayName: displayName,
-                username: username,
-                photoUrl: photoUrl,
+              final usersUpdateData = createUsersRecordData(
+                displayName: textController2.text,
+                username: textController1.text,
+                photoUrl: uploadedFileUrl,
               );
-
-              await widget.userRecord.reference.update(usersRecordData);
+              await widget.userRecord.reference.update(usersUpdateData);
               Navigator.pop(context);
             },
             icon: Icon(
@@ -93,11 +88,23 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                     children: [
                       Align(
                         alignment: Alignment(0, 0),
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.network(
+                            widget.userRecord.photoUrl,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, 0.05),
                         child: InkWell(
                           onTap: () async {
-                            final selectedMedia = await selectMedia(
-                              isVideo: true,
-                            );
+                            final selectedMedia = await selectMedia();
                             if (selectedMedia != null &&
                                 validateFileFormat(
                                     selectedMedia.storagePath, context)) {
@@ -114,28 +121,26 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               } else {
                                 showUploadMessage(
                                     context, 'Failed to upload media');
+                                return;
                               }
                             }
                           },
                           child: Container(
                             width: 120,
                             height: 120,
-                            clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
+                              color: Colors.transparent,
                               shape: BoxShape.circle,
                             ),
-                            child: Image.network(
-                              widget.userRecord.photoUrl,
+                            child: Align(
+                              alignment: Alignment(0, 0.15),
+                              child: FaIcon(
+                                FontAwesomeIcons.camera,
+                                color: Color(0x86F9F9F9),
+                                size: 45,
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, 0.15),
-                        child: FaIcon(
-                          FontAwesomeIcons.camera,
-                          color: Color(0x86F9F9F9),
-                          size: 45,
                         ),
                       )
                     ],
@@ -147,13 +152,13 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                     controller: textController1,
                     obscureText: false,
                     decoration: InputDecoration(
-                      hintText: 'Username',
-                      hintStyle: FlutterFlowTheme.bodyText1.override(
+                      labelText: 'Username',
+                      labelStyle: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Poppins',
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(
@@ -163,7 +168,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(
@@ -183,13 +188,13 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                     controller: textController2,
                     obscureText: false,
                     decoration: InputDecoration(
-                      hintText: 'Display Name',
-                      hintStyle: FlutterFlowTheme.bodyText1.override(
+                      labelText: 'Display Name',
+                      labelStyle: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Poppins',
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(
@@ -199,7 +204,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: const BorderRadius.only(

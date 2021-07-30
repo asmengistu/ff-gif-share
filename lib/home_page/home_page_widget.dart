@@ -1,7 +1,6 @@
 import '../add_post/add_post_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../destination_page/destination_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -35,12 +34,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             Icons.menu,
             color: Colors.black,
             size: 24,
-          ),
-        ),
-        title: Text(
-          getCurrentTimestamp,
-          style: FlutterFlowTheme.bodyText1.override(
-            fontFamily: 'Poppins',
           ),
         ),
         actions: [
@@ -112,32 +105,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DestinationPageWidget(),
-                          ),
-                        );
-                      },
-                      child: ListTile(
-                        title: Text(
-                          'Account Settings',
-                          style: FlutterFlowTheme.title3.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
+                    child: ListTile(
+                      title: Text(
+                        'Account Settings',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
                         ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Color(0xFF303030),
-                          size: 20,
-                        ),
-                        tileColor: Color(0xFFF5F5F5),
-                        dense: false,
-                        contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
                       ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFF303030),
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
@@ -247,43 +230,62 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ),
       ),
       body: SafeArea(
-        child: StreamBuilder<List<PostsRecord>>(
-          stream: queryPostsRecord(
-            queryBuilder: (postsRecord) =>
-                postsRecord.orderBy('created_at', descending: true),
-          ),
-          builder: (context, snapshot) {
-            // Customize what your widget looks like when it's loading.
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-            List<PostsRecord> listViewPostsRecordList = snapshot.data;
-            // Customize what your widget looks like with no query results.
-            if (snapshot.data.isEmpty) {
-              // return Container();
-              // For now, we'll just include some dummy data.
-              listViewPostsRecordList = createDummyPostsRecord(count: 4);
-            }
-            return Padding(
-              padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-              child: ListView.builder(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+          child: StreamBuilder<List<PostsRecord>>(
+            stream: queryPostsRecord(
+              queryBuilder: (postsRecord) =>
+                  postsRecord.orderBy('created_at', descending: true),
+            ),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: FlutterFlowTheme.primaryColor,
+                    ),
+                  ),
+                );
+              }
+              List<PostsRecord> listViewPostsRecordList = snapshot.data;
+              // Customize what your widget looks like with no query results.
+              if (snapshot.data.isEmpty) {
+                return Container(
+                  height: 100,
+                  child: Center(
+                    child: Text('No results.'),
+                  ),
+                );
+              }
+              return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
                 itemCount: listViewPostsRecordList.length,
                 itemBuilder: (context, listViewIndex) {
                   final listViewPostsRecord =
                       listViewPostsRecordList[listViewIndex];
-                  return StreamBuilder<UsersRecord>(
-                    stream: UsersRecord.getDocument(listViewPostsRecord.user),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      final cardUsersRecord = snapshot.data;
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Card(
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    child: StreamBuilder<UsersRecord>(
+                      stream: UsersRecord.getDocument(listViewPostsRecord.user),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: FlutterFlowTheme.primaryColor,
+                              ),
+                            ),
+                          );
+                        }
+                        final cardUsersRecord = snapshot.data;
+                        return Card(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           color: Color(0xFFF5F5F5),
                           elevation: 4,
@@ -303,13 +305,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   children: [
                                     InkWell(
                                       onDoubleTap: () async {
-                                        final postsRecordData = {
+                                        final postsUpdateData = {
                                           'liked_by': FieldValue.arrayUnion(
                                               [currentUserReference]),
                                         };
-
                                         await listViewPostsRecord.reference
-                                            .update(postsRecordData);
+                                            .update(postsUpdateData);
                                       },
                                       child: Image.network(
                                         listViewPostsRecord.gifUrl,
@@ -322,16 +323,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       alignment: Alignment(0.95, 0),
                                       child: ToggleIcon(
                                         onPressed: () async {
-                                          final testBool =
-                                              !listViewPostsRecord.testBool;
-
-                                          final postsRecordData =
+                                          final postsUpdateData =
                                               createPostsRecordData(
-                                            testBool: testBool,
+                                            testBool:
+                                                !listViewPostsRecord.testBool,
                                           );
-
                                           await listViewPostsRecord.reference
-                                              .update(postsRecordData);
+                                              .update(postsUpdateData);
                                         },
                                         value: listViewPostsRecord.testBool,
                                         onIcon: Icon(
@@ -357,7 +355,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         padding:
                                             EdgeInsets.fromLTRB(15, 0, 0, 0),
                                         child: Text(
-                                          'Post by: ',
+                                          '',
                                           style: FlutterFlowTheme.bodyText1
                                               .override(
                                             fontFamily: 'Poppins',
@@ -381,7 +379,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         padding:
                                             EdgeInsets.fromLTRB(30, 0, 0, 0),
                                         child: Text(
-                                          THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
+                                          '',
                                           style: FlutterFlowTheme.bodyText1
                                               .override(
                                             fontFamily: 'Poppins',
@@ -390,39 +388,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       )
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                    Text(
-                                      THIS_COULD_BE_OUR_FAULT_OR_YOURS___PLEASE_LET_US_KNOW_EITHER_WAY,
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    )
-                                  ],
                                 )
                               ],
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   );
                 },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

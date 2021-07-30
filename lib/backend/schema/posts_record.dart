@@ -1,10 +1,8 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
-import 'schema_util.dart';
+import 'index.dart';
 import 'serializers.dart';
+import 'package:built_value/built_value.dart';
 
 part 'posts_record.g.dart';
 
@@ -20,7 +18,7 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'created_at')
-  Timestamp get createdAt;
+  DateTime get createdAt;
 
   @nullable
   @BuiltValueField(wireName: 'liked_by')
@@ -49,15 +47,20 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
   PostsRecord._();
   factory PostsRecord([void Function(PostsRecordBuilder) updates]) =
       _$PostsRecord;
+
+  static PostsRecord getDocumentFromData(
+          Map<String, dynamic> data, DocumentReference reference) =>
+      serializers.deserializeWith(
+          serializer, {...data, kDocumentReferenceField: reference});
 }
 
 Map<String, dynamic> createPostsRecordData({
   String gifUrl,
   DocumentReference user,
-  Timestamp createdAt,
+  DateTime createdAt,
   bool testBool,
 }) =>
-    serializers.serializeWith(
+    serializers.toFirestore(
         PostsRecord.serializer,
         PostsRecord((p) => p
           ..gifUrl = gifUrl
@@ -65,14 +68,3 @@ Map<String, dynamic> createPostsRecordData({
           ..createdAt = createdAt
           ..likedBy = null
           ..testBool = testBool));
-
-PostsRecord get dummyPostsRecord {
-  final builder = PostsRecordBuilder()
-    ..gifUrl = dummyImagePath
-    ..createdAt = dummyTimestamp
-    ..testBool = dummyBoolean;
-  return builder.build();
-}
-
-List<PostsRecord> createDummyPostsRecord({int count}) =>
-    List.generate(count, (_) => dummyPostsRecord);
