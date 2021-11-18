@@ -330,6 +330,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           );
                                           await listViewPostsRecord.reference
                                               .update(postsUpdateData);
+                                          print('some local changes...');
                                         },
                                         value: listViewPostsRecord.testBool,
                                         onIcon: Icon(
