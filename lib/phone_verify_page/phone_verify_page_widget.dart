@@ -15,6 +15,7 @@ class PhoneVerifyPageWidget extends StatefulWidget {
 
 class _PhoneVerifyPageWidgetState extends State<PhoneVerifyPageWidget> {
   TextEditingController textController;
+  bool _loadingButton = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -30,7 +31,7 @@ class _PhoneVerifyPageWidgetState extends State<PhoneVerifyPageWidget> {
       backgroundColor: Color(0xFF1A1358),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,47 +72,51 @@ class _PhoneVerifyPageWidgetState extends State<PhoneVerifyPageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    if (textController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Enter SMS verification code.'),
-                        ),
+                    setState(() => _loadingButton = true);
+                    try {
+                      if (textController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Enter SMS verification code.'),
+                          ),
+                        );
+                        return;
+                      }
+                      final phoneVerifiedUser = await verifySmsCode(
+                        context: context,
+                        smsCode: textController.text,
                       );
-                      return;
+                      if (phoneVerifiedUser == null) {
+                        return;
+                      }
+                      await Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NavBarPage(initialPage: 'HomePage'),
+                        ),
+                        (r) => false,
+                      );
+                    } finally {
+                      setState(() => _loadingButton = false);
                     }
-                    final phoneVerifiedUser = await verifySmsCode(
-                      context: context,
-                      smsCode: textController.text,
-                    );
-                    if (phoneVerifiedUser == null) {
-                      return;
-                    }
-                    await Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            NavBarPage(initialPage: 'HomePage'),
-                      ),
-                      (r) => false,
-                    );
                   },
                   text: 'Verify',
                   options: FFButtonOptions(
                     width: 130,
                     height: 40,
                     color: FlutterFlowTheme.tertiaryColor,
-                    textStyle: FlutterFlowTheme.subtitle2.override(
-                      fontFamily: 'Poppins',
-                    ),
+                    textStyle: FlutterFlowTheme.subtitle2,
                     borderSide: BorderSide(
                       color: Colors.transparent,
                       width: 1,
                     ),
                     borderRadius: 12,
                   ),
+                  loading: _loadingButton,
                 ),
               )
             ],

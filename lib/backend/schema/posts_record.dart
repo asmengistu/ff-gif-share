@@ -50,8 +50,8 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
 
   static PostsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(
-          serializer, {...data, kDocumentReferenceField: reference});
+      serializers.deserializeWith(serializer,
+          {...mapFromFirestore(data), kDocumentReferenceField: reference});
 }
 
 Map<String, dynamic> createPostsRecordData({

@@ -1,6 +1,7 @@
 import '../add_post/add_post_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -37,7 +38,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
         ),
         actions: [
-          IconButton(
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            buttonSize: 48,
+            icon: Icon(
+              Icons.logout,
+              color: Colors.black,
+              size: 30,
+            ),
             onPressed: () async {
               await signOut();
               await Navigator.pushAndRemoveUntil(
@@ -48,12 +57,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 (r) => false,
               );
             },
-            icon: Icon(
-              Icons.logout,
-              color: Colors.black,
-              size: 30,
-            ),
-            iconSize: 30,
           )
         ],
         centerTitle: true,
@@ -87,7 +90,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               color: Color(0xFFEEEEEE),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 60, 10, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(10, 60, 10, 0),
               child: ListView(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
@@ -104,7 +107,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -120,11 +123,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -140,11 +144,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -160,11 +165,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -180,11 +186,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -200,11 +207,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ListTile(
                       title: Text(
                         'Account Settings',
@@ -220,7 +228,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       tileColor: Color(0xFFF5F5F5),
                       dense: false,
-                      contentPadding: EdgeInsets.fromLTRB(0, 1, 0, 0),
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                     ),
                   )
                 ],
@@ -231,7 +240,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 0),
           child: StreamBuilder<List<PostsRecord>>(
             stream: queryPostsRecord(
               queryBuilder: (postsRecord) =>
@@ -251,15 +260,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 );
               }
               List<PostsRecord> listViewPostsRecordList = snapshot.data;
-              // Customize what your widget looks like with no query results.
-              if (snapshot.data.isEmpty) {
-                return Container(
-                  height: 100,
-                  child: Center(
-                    child: Text('No results.'),
-                  ),
-                );
-              }
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
@@ -268,7 +268,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   final listViewPostsRecord =
                       listViewPostsRecordList[listViewIndex];
                   return Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                     child: StreamBuilder<UsersRecord>(
                       stream: UsersRecord.getDocument(listViewPostsRecord.user),
                       builder: (context, snapshot) {
@@ -320,7 +320,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment(0.95, 0),
+                                      alignment: AlignmentDirectional(0.95, 0),
                                       child: ToggleIcon(
                                         onPressed: () async {
                                           final postsUpdateData =
@@ -347,25 +347,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 15),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15, 0, 0, 0),
                                         child: Text(
                                           '',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                            fontStyle: FontStyle.italic,
-                                          ),
+                                          style: FlutterFlowTheme.bodyText1,
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 0, 1),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 1),
                                         child: Text(
                                           cardUsersRecord.email,
                                           style: FlutterFlowTheme.bodyText1
@@ -376,14 +373,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            30, 0, 0, 0),
                                         child: Text(
                                           '',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                          ),
+                                          style: FlutterFlowTheme.bodyText1,
                                         ),
                                       )
                                     ],

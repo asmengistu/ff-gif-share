@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,7 +41,15 @@ class _AddPostWidgetState extends State<AddPostWidget> {
           ),
         ),
         actions: [
-          IconButton(
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            buttonSize: 48,
+            icon: Icon(
+              Icons.done,
+              color: Colors.black,
+              size: 30,
+            ),
             onPressed: () async {
               final postsCreateData = createPostsRecordData(
                 gifUrl: textController.text,
@@ -50,12 +59,6 @@ class _AddPostWidgetState extends State<AddPostWidget> {
               await PostsRecord.collection.doc().set(postsCreateData);
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.done,
-              color: Colors.black,
-              size: 30,
-            ),
-            iconSize: 30,
           )
         ],
         centerTitle: true,
@@ -74,9 +77,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                     obscureText: false,
                     decoration: InputDecoration(
                       hintText: 'gif url',
-                      hintStyle: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                      ),
+                      hintStyle: FlutterFlowTheme.bodyText1,
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0x00000000),
@@ -98,9 +99,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                         ),
                       ),
                     ),
-                    style: FlutterFlowTheme.bodyText1.override(
-                      fontFamily: 'Poppins',
-                    ),
+                    style: FlutterFlowTheme.bodyText1,
                   ),
                   Expanded(
                     child: StreamBuilder<List<UsersRecord>>(
@@ -123,15 +122,6 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                         }
                         List<UsersRecord> listViewUsersRecordList =
                             snapshot.data;
-                        // Customize what your widget looks like with no query results.
-                        if (snapshot.data.isEmpty) {
-                          return Container(
-                            height: 100,
-                            child: Center(
-                              child: Text('No results.'),
-                            ),
-                          );
-                        }
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.vertical,
@@ -141,9 +131,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                                 listViewUsersRecordList[listViewIndex];
                             return Text(
                               listViewUsersRecord.displayName,
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                              style: FlutterFlowTheme.bodyText1,
                             );
                           },
                         );

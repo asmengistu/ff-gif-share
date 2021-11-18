@@ -1,6 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
+import 'auth/auth_util.dart';
+
+import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:gif_share/login_page/login_page_widget.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'home_page/home_page_widget.dart';
@@ -21,6 +26,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Stream<GifShareFirebaseUser> userStream;
   GifShareFirebaseUser initialUser;
+  final authUserSub = authenticatedUserStream.listen((_) {});
 
   @override
   void initState() {
@@ -30,9 +36,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    authUserSub.cancel();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GifShare',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en', '')],
       theme: ThemeData(primarySwatch: Colors.blue),
       home: initialUser == null
           ? const Center(
@@ -90,6 +109,7 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: 'Home',
+            tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -101,6 +121,7 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: 'Profile',
+            tooltip: '',
           )
         ],
         backgroundColor: Colors.white,
@@ -108,11 +129,8 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedItemColor: FlutterFlowTheme.primaryColor,
         unselectedItemColor: Color(0x8A000000),
         onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        // Temporary fix for https://github.com/flutter/flutter/issues/84556
-        selectedLabelStyle: const TextStyle(fontSize: 0.001),
-        unselectedLabelStyle: const TextStyle(fontSize: 0.001),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
       ),
     );

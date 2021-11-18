@@ -25,7 +25,7 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget> {
       key: scaffoldKey,
       body: SafeArea(
         child: Align(
-          alignment: Alignment(-0.05, 0),
+          alignment: AlignmentDirectional(-0.05, 0),
           child: InkWell(
             onTap: () async {
               await Navigator.push(
@@ -37,9 +37,7 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget> {
             },
             child: Text(
               'Go home',
-              style: FlutterFlowTheme.bodyText1.override(
-                fontFamily: 'Poppins',
-              ),
+              style: FlutterFlowTheme.bodyText1,
             ),
           ),
         ),

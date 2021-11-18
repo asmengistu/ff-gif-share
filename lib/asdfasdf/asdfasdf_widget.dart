@@ -17,6 +17,9 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
   TextEditingController emailTextController;
   TextEditingController passwordTextController;
   bool passwordVisibility;
+  bool _loadingButton1 = false;
+  bool _loadingButton2 = false;
+  bool _loadingButton3 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,7 +38,7 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
         child: Stack(
           children: [
             Align(
-              alignment: Alignment(0, -1),
+              alignment: AlignmentDirectional(0, -1),
               child: Image.network(
                 'https://picsum.photos/seed/484/300',
                 width: double.infinity,
@@ -48,7 +51,7 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
               children: [
                 Expanded(
                   child: Align(
-                    alignment: Alignment(0, 0),
+                    alignment: AlignmentDirectional(0, 0),
                     child: Container(
                       width: 0,
                       height: 0,
@@ -68,7 +71,7 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 60, 0, 60),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 60),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +80,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsets.fromLTRB(4, 0, 0, 20),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(4, 0, 0, 20),
                                 child: Container(
                                   width: 300,
                                   height: 50,
@@ -86,7 +90,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20, 0, 20, 0),
                                     child: TextFormField(
                                       controller: emailTextController,
                                       obscureText: false,
@@ -128,7 +133,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(4, 0, 4, 20),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(4, 0, 4, 20),
                                 child: Container(
                                   width: 300,
                                   height: 50,
@@ -137,7 +143,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20, 0, 20, 0),
                                     child: TextFormField(
                                       controller: passwordTextController,
                                       obscureText: !passwordVisibility,
@@ -191,26 +198,32 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    final user = await signInWithEmail(
-                                      context,
-                                      emailTextController.text,
-                                      passwordTextController.text,
-                                    );
-                                    if (user == null) {
-                                      return;
-                                    }
+                                    setState(() => _loadingButton1 = true);
+                                    try {
+                                      final user = await signInWithEmail(
+                                        context,
+                                        emailTextController.text,
+                                        passwordTextController.text,
+                                      );
+                                      if (user == null) {
+                                        return;
+                                      }
 
-                                    await Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            NavBarPage(initialPage: 'HomePage'),
-                                      ),
-                                      (r) => false,
-                                    );
+                                      await Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NavBarPage(
+                                              initialPage: 'HomePage'),
+                                        ),
+                                        (r) => false,
+                                      );
+                                    } finally {
+                                      setState(() => _loadingButton1 = false);
+                                    }
                                   },
                                   text: 'Sign in',
                                   options: FFButtonOptions(
@@ -228,6 +241,7 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                     ),
                                     borderRadius: 25,
                                   ),
+                                  loading: _loadingButton1,
                                 ),
                               ),
                               Text(
@@ -243,7 +257,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -254,7 +269,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                       child: Stack(
                                         children: [
                                           Align(
-                                            alignment: Alignment(-0.7, -0.01),
+                                            alignment: AlignmentDirectional(
+                                                -0.7, -0.01),
                                             child: Container(
                                               width: 18,
                                               height: 18,
@@ -292,19 +308,22 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                               ),
                                               borderRadius: 0,
                                             ),
+                                            loading: _loadingButton2,
                                           )
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 0, 0),
                                       child: Container(
                                         width: 100,
                                         height: 38,
                                         child: Stack(
                                           children: [
                                             Align(
-                                              alignment: Alignment(-0.7, -0.01),
+                                              alignment: AlignmentDirectional(
+                                                  -0.7, -0.01),
                                               child: Container(
                                                 width: 18,
                                                 height: 18,
@@ -319,26 +338,35 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                               ),
                                             ),
                                             Align(
-                                              alignment: Alignment(0, 0),
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
-                                                  final user =
-                                                      await signInWithGoogle(
-                                                          context);
-                                                  if (user == null) {
-                                                    return;
+                                                  setState(() =>
+                                                      _loadingButton3 = true);
+                                                  try {
+                                                    final user =
+                                                        await signInWithGoogle(
+                                                            context);
+                                                    if (user == null) {
+                                                      return;
+                                                    }
+                                                    await Navigator
+                                                        .pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            NavBarPage(
+                                                                initialPage:
+                                                                    'HomePage'),
+                                                      ),
+                                                      (r) => false,
+                                                    );
+                                                  } finally {
+                                                    setState(() =>
+                                                        _loadingButton3 =
+                                                            false);
                                                   }
-                                                  await Navigator
-                                                      .pushAndRemoveUntil(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NavBarPage(
-                                                              initialPage:
-                                                                  'HomePage'),
-                                                    ),
-                                                    (r) => false,
-                                                  );
                                                 },
                                                 text: 'Sign in',
                                                 icon: Icon(
@@ -362,6 +390,7 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                                   ),
                                                   borderRadius: 0,
                                                 ),
+                                                loading: _loadingButton3,
                                               ),
                                             )
                                           ],
@@ -377,7 +406,8 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 10, 0),
                                     child: Text(
                                       'Don\'t have an account?',
                                       style: GoogleFonts.getFont(
@@ -420,9 +450,10 @@ class _AsdfasdfWidgetState extends State<AsdfasdfWidget> {
                             ],
                           ),
                           Align(
-                            alignment: Alignment(0, -0.65),
+                            alignment: AlignmentDirectional(0, -0.65),
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                               child: Image.network(
                                 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/flutterflow_assets/ff_logo.png',
                                 width: 50,

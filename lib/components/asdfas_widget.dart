@@ -15,9 +15,7 @@ class _AsdfasWidgetState extends State<AsdfasWidget> {
   Widget build(BuildContext context) {
     return Text(
       'Hello World',
-      style: FlutterFlowTheme.bodyText1.override(
-        fontFamily: 'Poppins',
-      ),
+      style: FlutterFlowTheme.bodyText1,
     );
   }
 }

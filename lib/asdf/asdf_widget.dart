@@ -38,7 +38,7 @@ class _AsdfWidgetState extends State<AsdfWidget> {
           child: Stack(
             children: [
               Align(
-                alignment: Alignment(0.06, -0.63),
+                alignment: AlignmentDirectional(0.06, -0.63),
                 child: Image.network(
                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/flutterflow_assets/ff_full_logo_light.png',
                   width: 280,
@@ -47,22 +47,22 @@ class _AsdfWidgetState extends State<AsdfWidget> {
                 ),
               ),
               Align(
-                alignment: Alignment(0, 0),
+                alignment: AlignmentDirectional(0, 0),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 80),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 80),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                         child: Container(
                           width: 285,
                           height: 40,
                           child: Stack(
                             children: [
                               Align(
-                                alignment: Alignment(0, 0),
+                                alignment: AlignmentDirectional(0, 0),
                                 child: TextFormField(
                                   controller: textController1,
                                   obscureText: false,
@@ -102,7 +102,7 @@ class _AsdfWidgetState extends State<AsdfWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: Alignment(0.95, 0.5),
+                                alignment: AlignmentDirectional(0.95, 0.5),
                                 child: Icon(
                                   Icons.person,
                                   color: Colors.white,
@@ -114,14 +114,14 @@ class _AsdfWidgetState extends State<AsdfWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                         child: Container(
                           width: 285,
                           height: 40,
                           child: Stack(
                             children: [
                               Align(
-                                alignment: Alignment(0, 0),
+                                alignment: AlignmentDirectional(0, 0),
                                 child: TextFormField(
                                   controller: textController2,
                                   obscureText: !passwordVisibility,
@@ -173,7 +173,7 @@ class _AsdfWidgetState extends State<AsdfWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: Alignment(0.95, 0.5),
+                                alignment: AlignmentDirectional(0.95, 0.5),
                                 child: Icon(
                                   Icons.lock_open,
                                   color: Colors.white,

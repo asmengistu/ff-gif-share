@@ -15,6 +15,7 @@ class PhoneSignInPageWidget extends StatefulWidget {
 
 class _PhoneSignInPageWidgetState extends State<PhoneSignInPageWidget> {
   TextEditingController textController;
+  bool _loadingButton = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -30,7 +31,7 @@ class _PhoneSignInPageWidgetState extends State<PhoneSignInPageWidget> {
       backgroundColor: Color(0xFF1A1358),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,47 +77,51 @@ class _PhoneSignInPageWidgetState extends State<PhoneSignInPageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    if (textController.text.isEmpty ||
-                        !textController.text.startsWith('+')) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                              'Phone Number is required and has to start with +.'),
-                        ),
-                      );
-                      return;
-                    }
-                    await beginPhoneAuth(
-                      context: context,
-                      phoneNumber: textController.text,
-                      onCodeSent: () async {
-                        await Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PhoneVerifyPageWidget(),
+                    setState(() => _loadingButton = true);
+                    try {
+                      if (textController.text.isEmpty ||
+                          !textController.text.startsWith('+')) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'Phone Number is required and has to start with +.'),
                           ),
-                          (r) => false,
                         );
-                      },
-                    );
+                        return;
+                      }
+                      await beginPhoneAuth(
+                        context: context,
+                        phoneNumber: textController.text,
+                        onCodeSent: () async {
+                          await Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PhoneVerifyPageWidget(),
+                            ),
+                            (r) => false,
+                          );
+                        },
+                      );
+                    } finally {
+                      setState(() => _loadingButton = false);
+                    }
                   },
                   text: 'Sign In',
                   options: FFButtonOptions(
                     width: 130,
                     height: 40,
                     color: FlutterFlowTheme.tertiaryColor,
-                    textStyle: FlutterFlowTheme.subtitle2.override(
-                      fontFamily: 'Poppins',
-                    ),
+                    textStyle: FlutterFlowTheme.subtitle2,
                     borderSide: BorderSide(
                       color: Colors.transparent,
                       width: 1,
                     ),
                     borderRadius: 12,
                   ),
+                  loading: _loadingButton,
                 ),
               )
             ],

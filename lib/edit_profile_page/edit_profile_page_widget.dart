@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/upload_media.dart';
@@ -52,7 +53,15 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
           ),
         ),
         actions: [
-          IconButton(
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            buttonSize: 48,
+            icon: Icon(
+              Icons.done,
+              color: Colors.black,
+              size: 30,
+            ),
             onPressed: () async {
               final usersUpdateData = createUsersRecordData(
                 displayName: textController2.text,
@@ -62,12 +71,6 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
               await widget.userRecord.reference.update(usersUpdateData);
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.done,
-              color: Colors.black,
-              size: 30,
-            ),
-            iconSize: 30,
           )
         ],
         centerTitle: true,
@@ -75,9 +78,9 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
       ),
       body: SafeArea(
         child: Align(
-          alignment: Alignment(0, 0),
+          alignment: AlignmentDirectional(0, 0),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -87,7 +90,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                   child: Stack(
                     children: [
                       Align(
-                        alignment: Alignment(0, 0),
+                        alignment: AlignmentDirectional(0, 0),
                         child: Container(
                           width: 120,
                           height: 120,
@@ -101,10 +104,12 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0, 0.05),
+                        alignment: AlignmentDirectional(0, 0.05),
                         child: InkWell(
                           onTap: () async {
-                            final selectedMedia = await selectMedia();
+                            final selectedMedia = await selectMedia(
+                              mediaSource: MediaSource.photoGallery,
+                            );
                             if (selectedMedia != null &&
                                 validateFileFormat(
                                     selectedMedia.storagePath, context)) {
@@ -133,7 +138,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               shape: BoxShape.circle,
                             ),
                             child: Align(
-                              alignment: Alignment(0, 0.15),
+                              alignment: AlignmentDirectional(0, 0.15),
                               child: FaIcon(
                                 FontAwesomeIcons.camera,
                                 color: Color(0x86F9F9F9),
@@ -147,15 +152,13 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: TextFormField(
                     controller: textController1,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Username',
-                      labelStyle: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                      ),
+                      labelStyle: FlutterFlowTheme.bodyText1,
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0x00000000),
@@ -177,21 +180,17 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                         ),
                       ),
                     ),
-                    style: FlutterFlowTheme.bodyText1.override(
-                      fontFamily: 'Poppins',
-                    ),
+                    style: FlutterFlowTheme.bodyText1,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: TextFormField(
                     controller: textController2,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Display Name',
-                      labelStyle: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Poppins',
-                      ),
+                      labelStyle: FlutterFlowTheme.bodyText1,
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0x00000000),
@@ -213,9 +212,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                         ),
                       ),
                     ),
-                    style: FlutterFlowTheme.bodyText1.override(
-                      fontFamily: 'Poppins',
-                    ),
+                    style: FlutterFlowTheme.bodyText1,
                   ),
                 )
               ],

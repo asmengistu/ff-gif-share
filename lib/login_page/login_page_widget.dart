@@ -20,6 +20,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   TextEditingController emailTextController;
   TextEditingController passwordTextController;
   bool passwordVisibility;
+  bool _loadingButton1 = false;
+  bool _loadingButton2 = false;
+  bool _loadingButton3 = false;
+  bool _loadingButton4 = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -49,7 +53,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           children: [
             Spacer(),
             Align(
-              alignment: Alignment(0.04, -0.58),
+              alignment: AlignmentDirectional(0.04, -0.58),
               child: Text(
                 'GifShare',
                 style: FlutterFlowTheme.bodyText1.override(
@@ -63,23 +67,23 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
             Expanded(
               flex: 5,
               child: Align(
-                alignment: Alignment(0, 0.45),
+                alignment: AlignmentDirectional(0, 0.45),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                           child: Container(
                             width: 285,
                             height: 40,
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment(0, 0),
+                                  alignment: AlignmentDirectional(0, 0),
                                   child: TextFormField(
                                     controller: emailTextController,
                                     obscureText: false,
@@ -119,7 +123,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment(0.95, 0.5),
+                                  alignment: AlignmentDirectional(0.95, 0.5),
                                   child: Icon(
                                     Icons.person,
                                     color: Colors.white,
@@ -131,14 +135,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                           child: Container(
                             width: 285,
                             height: 40,
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment(0, 0),
+                                  alignment: AlignmentDirectional(0, 0),
                                   child: TextFormField(
                                     controller: passwordTextController,
                                     obscureText: !passwordVisibility,
@@ -190,7 +194,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment(0.95, 0.5),
+                                  alignment: AlignmentDirectional(0.95, 0.5),
                                   child: Icon(
                                     Icons.lock_open,
                                     color: Colors.white,
@@ -202,29 +206,34 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  final user = await createAccountWithEmail(
-                                    context,
-                                    emailTextController.text,
-                                    passwordTextController.text,
-                                  );
-                                  if (user == null) {
-                                    return;
-                                  }
+                                  setState(() => _loadingButton1 = true);
+                                  try {
+                                    final user = await createAccountWithEmail(
+                                      context,
+                                      emailTextController.text,
+                                      passwordTextController.text,
+                                    );
+                                    if (user == null) {
+                                      return;
+                                    }
 
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OnboardingPageWidget(),
-                                    ),
-                                  );
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            OnboardingPageWidget(),
+                                      ),
+                                    );
+                                  } finally {
+                                    setState(() => _loadingButton1 = false);
+                                  }
                                 },
                                 text: 'Sign up',
                                 options: FFButtonOptions(
@@ -243,28 +252,35 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                   borderRadius: 0,
                                 ),
+                                loading: _loadingButton1,
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(35, 0, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    final user = await signInWithEmail(
-                                      context,
-                                      emailTextController.text,
-                                      passwordTextController.text,
-                                    );
-                                    if (user == null) {
-                                      return;
-                                    }
+                                    setState(() => _loadingButton2 = true);
+                                    try {
+                                      final user = await signInWithEmail(
+                                        context,
+                                        emailTextController.text,
+                                        passwordTextController.text,
+                                      );
+                                      if (user == null) {
+                                        return;
+                                      }
 
-                                    await Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            NavBarPage(initialPage: 'HomePage'),
-                                      ),
-                                      (r) => false,
-                                    );
+                                      await Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NavBarPage(
+                                              initialPage: 'HomePage'),
+                                        ),
+                                        (r) => false,
+                                      );
+                                    } finally {
+                                      setState(() => _loadingButton2 = false);
+                                    }
                                   },
                                   text: 'Sign in',
                                   options: FFButtonOptions(
@@ -283,13 +299,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     ),
                                     borderRadius: 0,
                                   ),
+                                  loading: _loadingButton2,
                                 ),
                               )
                             ],
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: Text(
                             'Forgot Password?',
                             style: GoogleFonts.getFont(
@@ -301,12 +318,17 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PhoneSignInPageWidget(),
-                              ),
-                            );
+                            setState(() => _loadingButton3 = true);
+                            try {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhoneSignInPageWidget(),
+                                ),
+                              );
+                            } finally {
+                              setState(() => _loadingButton3 = false);
+                            }
                           },
                           text: 'Phone Sign In',
                           icon: FaIcon(
@@ -328,6 +350,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                             borderRadius: 0,
                           ),
+                          loading: _loadingButton3,
                         )
                       ],
                     ),
@@ -337,17 +360,22 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
             ),
             FFButtonWidget(
               onPressed: () async {
-                final user = await signInWithGoogle(context);
-                if (user == null) {
-                  return;
+                setState(() => _loadingButton4 = true);
+                try {
+                  final user = await signInWithGoogle(context);
+                  if (user == null) {
+                    return;
+                  }
+                  await Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NavBarPage(initialPage: 'HomePage'),
+                    ),
+                    (r) => false,
+                  );
+                } finally {
+                  setState(() => _loadingButton4 = false);
                 }
-                await Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NavBarPage(initialPage: 'HomePage'),
-                  ),
-                  (r) => false,
-                );
               },
               text: 'Google Sign In',
               icon: FaIcon(
@@ -369,6 +397,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 ),
                 borderRadius: 0,
               ),
+              loading: _loadingButton4,
             ),
             Spacer(flex: 2)
           ],

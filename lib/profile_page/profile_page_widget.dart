@@ -15,6 +15,7 @@ class ProfilePageWidget extends StatefulWidget {
 }
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
+  bool _loadingButton = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -56,22 +57,23 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(12, 0, 0, 1),
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 1),
                           child: Container(
                             width: 100,
                             height: 100,
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment(-0.4, -0.02),
+                                  alignment: AlignmentDirectional(-0.4, -0.02),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(1, 0, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        1, 0, 0, 0),
                                     child: Container(
                                       width: 100,
                                       height: 100,
@@ -90,7 +92,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                           child: Text(
                             profilePageUsersRecord.displayName,
                             style: FlutterFlowTheme.bodyText1.override(
@@ -106,17 +108,22 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 18, 15, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 18, 15, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfilePageWidget(
-                            userRecord: profilePageUsersRecord,
+                      setState(() => _loadingButton = true);
+                      try {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfilePageWidget(
+                              userRecord: profilePageUsersRecord,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } finally {
+                        setState(() => _loadingButton = false);
+                      }
                     },
                     text: 'Edit Profile',
                     options: FFButtonOptions(
@@ -134,11 +141,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       ),
                       borderRadius: 8,
                     ),
+                    loading: _loadingButton,
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: DefaultTabController(
                       length: 2,
                       initialIndex: 0,
@@ -146,6 +154,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                         children: [
                           TabBar(
                             labelColor: FlutterFlowTheme.primaryColor,
+                            labelStyle: GoogleFonts.getFont(
+                              'Roboto',
+                            ),
                             indicatorColor: FlutterFlowTheme.secondaryColor,
                             tabs: [
                               Tab(
@@ -164,9 +175,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             child: TabBarView(
                               children: [
                                 Align(
-                                  alignment: Alignment(0, -1),
+                                  alignment: AlignmentDirectional(0, -1),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 3, 0, 0),
                                     child: StreamBuilder<List<PostsRecord>>(
                                       stream: queryPostsRecord(
                                         queryBuilder: (postsRecord) =>
@@ -191,15 +203,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         List<PostsRecord>
                                             gridViewPostsRecordList =
                                             snapshot.data;
-                                        // Customize what your widget looks like with no query results.
-                                        if (snapshot.data.isEmpty) {
-                                          return Container(
-                                            height: 100,
-                                            child: Center(
-                                              child: Text('No results.'),
-                                            ),
-                                          );
-                                        }
                                         return GridView.builder(
                                           padding: EdgeInsets.zero,
                                           gridDelegate:
@@ -231,9 +234,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment(0, -1),
+                                  alignment: AlignmentDirectional(0, -1),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 3, 0, 0),
                                     child: StreamBuilder<List<PostsRecord>>(
                                       stream: queryPostsRecord(
                                         queryBuilder: (postsRecord) =>
@@ -258,15 +262,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         List<PostsRecord>
                                             gridViewPostsRecordList =
                                             snapshot.data;
-                                        // Customize what your widget looks like with no query results.
-                                        if (snapshot.data.isEmpty) {
-                                          return Container(
-                                            height: 100,
-                                            child: Center(
-                                              child: Text('No results.'),
-                                            ),
-                                          );
-                                        }
                                         return GridView.builder(
                                           padding: EdgeInsets.zero,
                                           gridDelegate:
