@@ -62,6 +62,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         centerTitle: true,
         elevation: 1,
       ),
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.push(
